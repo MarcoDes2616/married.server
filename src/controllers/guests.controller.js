@@ -1,6 +1,8 @@
 const catchError = require('../utils/catchError');
 const Guests = require('../models/Guests');
 const Title = require('../models/Title');
+const jwt = require("jsonwebtoken");
+const sendEmail = require('../utils/sendMail');
 
 const getAll = catchError(async(req, res) => {
     const results = await Guests.findAll({
@@ -51,6 +53,24 @@ const update = catchError(async(req, res) => {
     return res.json(result[1][0]);
 });
 
+const sendInvitation = catchError(async(req, res) => {
+    const { id } = req.params;
+    // const { frontBaseUrl } = req.body;
+    let frontBaseUrl = "http://google.com"
+    const guest = await Guests.findByPk(id);
+    const guest_token = jwt.sign({ guest }, process.env.TOKEN_SECRET, {
+        expiresIn: process.env.TOKEN_EXPIRES_IN,
+      });
+    await Guests.update({guest_token}, {where: {id}})
+    await sendEmail({
+        to: guest.email,
+        subject: "INVITACIÓN DE MATRIMONIO M&K",
+        html: ` <h3>Si no vienes, envía el regalo</h3>
+                <a href="${frontBaseUrl}/${guest_token}">Obtener invitación</a>`
+      });
+    return res.json({success: true});
+})
+
 const getGuestByToken = catchError(async(req, res) => {
     const { token } = req.params;
     console.log(token);
@@ -73,7 +93,8 @@ module.exports = {
     getOne,
     remove,
     update,
-    getGuestByToken
+    getGuestByToken,
+    sendInvitation
 }
 
 //CREATE READ UPDATE DELETE

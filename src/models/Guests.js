@@ -21,7 +21,7 @@ const Guests = sequelize.define(
       allowNull: false,
     },
     guest_token: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
   },

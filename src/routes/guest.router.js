@@ -1,4 +1,4 @@
-const { getAll, create, getOne, remove, update, getGuestByToken } = require('../controllers/guests.controller');
+const { getAll, create, getOne, remove, update, getGuestByToken, sendInvitation } = require('../controllers/guests.controller');
 const express = require('express');
 
 const guestRouter = express.Router();
@@ -14,5 +14,8 @@ guestRouter.route('/:id')
 
 guestRouter.route("/get_guest/:token")
     .get(getGuestByToken)
+
+guestRouter.route("/send_invitation/:id")
+    .get(sendInvitation)
 
 module.exports = guestRouter;
