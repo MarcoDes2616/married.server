@@ -66,7 +66,9 @@ const sendInvitation = catchError(async(req, res) => {
         to: guest.email,
         subject: "INVITACIÓN DE MATRIMONIO M&K",
         html: ` <h3>Si no vienes, envía el regalo</h3>
-                <a href="${frontBaseUrl}/${guest_token}">Obtener invitación</a>`
+                <a href="${frontBaseUrl}/${guest_token}">Obtener invitación</a><br />
+                <a href="https://calendar.app.google/rf2TTVUCp2AgbJar8">Click para Agendar</a>
+                `
       });
     return res.json({success: true});
 })
