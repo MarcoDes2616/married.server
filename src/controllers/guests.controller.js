@@ -57,7 +57,7 @@ const getGuestByToken = catchError(async(req, res) => {
     
     const result = await Guests.findOne({
         where: { guest_token: token },
-        attributes: { exclude: ["titleId"] },
+        attributes: ["first_name", "last_name"],
         include: {
             model: Title,
             attributes: ["title"]
