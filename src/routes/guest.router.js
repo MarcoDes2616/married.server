@@ -16,6 +16,6 @@ guestRouter.route("/get_guest/:token")
     .get(getGuestByToken)
 
 guestRouter.route("/send_invitation/:id")
-    .get(sendInvitation)
+    .post(sendInvitation)
 
 module.exports = guestRouter;

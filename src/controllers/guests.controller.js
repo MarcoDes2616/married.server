@@ -55,8 +55,7 @@ const update = catchError(async(req, res) => {
 
 const sendInvitation = catchError(async(req, res) => {
     const { id } = req.params;
-    // const { frontBaseUrl } = req.body;
-    let frontBaseUrl = "http://google.com"
+    const { frontBaseUrl } = req.body;
     const guest = await Guests.findByPk(id);
     const guest_token = jwt.sign({ guest }, process.env.TOKEN_SECRET, {
         expiresIn: process.env.TOKEN_EXPIRES_IN,
