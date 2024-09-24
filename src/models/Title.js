@@ -4,13 +4,7 @@ const sequelize = require("../utils/connection");
 const Title = sequelize.define(
   "titles",
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
-    title: {
+    title_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },

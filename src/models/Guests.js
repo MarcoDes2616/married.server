@@ -4,12 +4,6 @@ const sequelize = require("../utils/connection");
 const Guests = sequelize.define(
   "guests",
   {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false,
-    },
     first_name: {
       type: DataTypes.STRING,
       allowNull: false,
