@@ -1,15 +1,15 @@
 const { getAll, create, getOne, remove, update } = require('../controllers/role.controller');
 const express = require('express');
 
-const roleRoutes = express.Router();
+const roleRouter = express.Router();
 
-roleRoutes.route('/')
+roleRouter.route('/')
     .get(getAll)
     .post(create);
 
-roleRoutes.route('/:id')
+roleRouter.route('/:id')
     .get(getOne)
     .delete(remove)
     .put(update);
 
-module.exports = roleRoutes;
+module.exports = roleRouter;
