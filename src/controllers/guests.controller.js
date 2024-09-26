@@ -69,10 +69,10 @@ const update = catchError(async (req, res) => {
 const sendInvitation = catchError(async (req, res) => {
     const { id } = req.params;
     const { frontBaseUrl } = req.body;
-    const guest = await Guests.findByPk(id);
+    const {email} = await Guests.findByPk(id);
     
     // Generar token para el invitado
-    const guest_token = jwt.sign({ guest }, process.env.TOKEN_SECRET, {
+    const guest_token = jwt.sign({ email }, process.env.TOKEN_SECRET, {
         expiresIn: process.env.TOKEN_EXPIRES_IN,
     });
 
