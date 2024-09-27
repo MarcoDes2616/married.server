@@ -12,7 +12,6 @@ const getAll = catchError(async(req, res) => {
             },
             {
                 model: Requirement,
-                attributes: ["requirement"]
             }
         ]
     });
@@ -38,7 +37,6 @@ const getOne = catchError(async(req, res) => {
             },
             {
                 model: Requirement,
-                attributes: ["requirement"]
             }
         ]
     });
