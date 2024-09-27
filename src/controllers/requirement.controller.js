@@ -13,7 +13,7 @@ const getAll = catchError(async(req, res) => {
 const getAllOrderedByPrice = catchError(async (req, res) => {
     const results = await Requirement.findAll({
       order: [
-        ['price', 'DESC'] // Ordena por 'price' de mayor a menor (DESC)
+        ['price', 'ASC']
       ],
     });
     return res.json(results);
