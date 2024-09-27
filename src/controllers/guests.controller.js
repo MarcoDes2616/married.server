@@ -6,23 +6,28 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require('../utils/sendMail');
 
 const getAll = catchError(async (req, res) => {
+    const { roleId } = req.query; // Obtener el roleId de la query
+
     const results = await Guests.findAll({
         attributes: {
-            exclude: ["titleId"]
+            exclude: ["titleId", "roleId"]
         },
+        where: roleId ? { roleId } : {}, // Filtrar si roleId está presente
         include: [
             {
                 model: Title,
                 attributes: ["title"]
             },
             {
-                model: Role, // Incluir el modelo Role
-                attributes: ["role_name"] // Incluir el atributo role_name
+                model: Role,
+                attributes: ["role_name"]
             }
         ]
     });
+
     return res.json(results);
 });
+
 
 const create = catchError(async (req, res) => {
     const result = await Guests.create(req.body);
