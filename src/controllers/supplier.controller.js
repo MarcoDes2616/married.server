@@ -20,7 +20,10 @@ const getAll = catchError(async(req, res) => {
 });
 
 const create = catchError(async(req, res) => {
-    const result = await Supplier.create(req.body);
+    const {id: supplierId} = await Supplier.create(req.body);
+    await Requirement.update({supplierId},
+        { where: {id : req.body.requirementId}, returning: true }
+    )
     return res.status(201).json(result);
 });
 

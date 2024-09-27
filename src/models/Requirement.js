@@ -8,9 +8,13 @@ const Requirement = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    price: {
+      type: DataTypes.DECIMAL(10, 2), // Decimal type for storing prices (up to 10 digits with 2 decimal places)
+      allowNull: true,
+    },
   },
   {
-    timestamps: false,
+    timestamps: false, // Disable timestamps if not needed
   }
 );
 

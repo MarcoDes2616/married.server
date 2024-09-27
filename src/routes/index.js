@@ -5,6 +5,7 @@ const titleRouter = require('./title.router');
 const noteRouter = require('./note.router');
 const requirementRouter = require('./requirement.router');
 const supplierRouter = require('./suplier.router');
+const budgetRouter = require('./budget.router');
 const router = express.Router();
 
 // colocar las rutas aquí
@@ -19,6 +20,8 @@ router.use("/supplier", supplierRouter)
 router.use("/requirement", requirementRouter)
 
 router.use("/note", noteRouter)
+
+router.use("/budget", budgetRouter)
 
 
 module.exports = router;

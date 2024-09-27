@@ -10,6 +10,15 @@ const getAll = catchError(async(req, res) => {
     return res.json(results);
 });
 
+const getAllOrderedByPrice = catchError(async (req, res) => {
+    const results = await Requirement.findAll({
+      order: [
+        ['price', 'DESC'] // Ordena por 'price' de mayor a menor (DESC)
+      ],
+    });
+    return res.json(results);
+  });
+
 const create = catchError(async(req, res) => {
     const result = await Requirement.create(req.body);
     return res.status(201).json(result);
@@ -43,5 +52,6 @@ module.exports = {
     create,
     getOne,
     remove,
-    update
+    update,
+    getAllOrderedByPrice
 }
