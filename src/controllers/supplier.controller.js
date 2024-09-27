@@ -20,9 +20,10 @@ const getAll = catchError(async(req, res) => {
 });
 
 const create = catchError(async(req, res) => {
-    const {id: supplierId} = await Supplier.create(req.body);
-    await Requirement.update({supplierId},
-        { where: {id : req.body.requirementId}, returning: true }
+    const {requirementId, full_name, phone, price} = req.body
+    const {id: supplierId} = await Supplier.create({full_name, phone});
+    await Requirement.update({supplierId, price},
+        { where: {id : requirementId}, returning: true }
     )
     return res.status(201).json(result);
 });
@@ -45,9 +46,18 @@ const getOne = catchError(async(req, res) => {
     return res.json(result);
 });
 
-const remove = catchError(async(req, res) => {
+const remove = catchError(async (req, res) => {
     const { id } = req.params;
-    await Supplier.destroy({ where: {id} });
+    const supplier = await Supplier.findByPk(id);
+
+    if (!supplier) {
+        return res.status(404).json({ message: "Supplier not found" });
+    }
+    await Requirement.update(
+        { supplierId: null, price: null },
+        { where: { supplierId: id } }
+    );
+    await Supplier.destroy({ where: { id } });
     return res.sendStatus(204);
 });
 

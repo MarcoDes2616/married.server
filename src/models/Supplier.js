@@ -15,14 +15,6 @@ const Supplier = sequelize.define(
   },
   {
     timestamps: false,
-    defaultScope: {
-      attributes: { exclude: ['guest_token'] } // Excluir guest_token en la respuesta por defecto
-    },
-    scopes: {
-      withGuestToken: {
-        attributes: { include: ['guest_token'] } // Scope opcional para incluir guest_token cuando se necesite
-      }
-    }
   }
 );
 
