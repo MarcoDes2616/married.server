@@ -24,7 +24,7 @@ const create = catchError(async(req, res) => {
     await Requirement.update({supplierId, price},
         { where: {id : requirementId}, returning: true }
     )
-    return res.status(201).json(result);
+    return res.status(201).json({success: true});
 });
 
 const getOne = catchError(async(req, res) => {
