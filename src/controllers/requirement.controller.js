@@ -1,57 +1,63 @@
-const catchError = require('../utils/catchError');
-const Requirement = require('../models/Requirement');
+const catchError = require("../utils/catchError");
+const Requirement = require("../models/Requirement");
 
-const getAll = catchError(async(req, res) => {
-    const results = await Requirement.findAll({
-        where: {
-          supplierId: null,
-        }
-    });
-    return res.json(results);
+const getAll = catchError(async (req, res) => {
+  const results = await Requirement.findAll({
+    where: {
+      supplierId: null,
+    },
+  });
+  return res.json(results);
 });
+
+const { Op } = require("sequelize");
 
 const getAllOrderedByPrice = catchError(async (req, res) => {
-    const results = await Requirement.findAll({
-      order: [
-        ['price', 'ASC']
-      ],
-    });
-    return res.json(results);
+  const results = await Requirement.findAll({
+    where: {
+      supplierId: {
+        [Op.ne]: null,
+      },
+    },
+    order: [["price", "DESC"]],
   });
-
-const create = catchError(async(req, res) => {
-    const result = await Requirement.create(req.body);
-    return res.status(201).json(result);
+  return res.json(results);
 });
 
-const getOne = catchError(async(req, res) => {
-    const { id } = req.params;
-    const result = await Requirement.findByPk(id);
-    if(!result) return res.sendStatus(404);
-    return res.json(result);
+
+const create = catchError(async (req, res) => {
+  const result = await Requirement.create(req.body);
+  return res.status(201).json(result);
 });
 
-const remove = catchError(async(req, res) => {
-    const { id } = req.params;
-    await Requirement.destroy({ where: {id} });
-    return res.sendStatus(204);
+const getOne = catchError(async (req, res) => {
+  const { id } = req.params;
+  const result = await Requirement.findByPk(id);
+  if (!result) return res.sendStatus(404);
+  return res.json(result);
 });
 
-const update = catchError(async(req, res) => {
-    const { id } = req.params;
-    const result = await Requirement.update(
-        req.body,
-        { where: {id}, returning: true }
-    );
-    if(result[0] === 0) return res.sendStatus(404);
-    return res.json(result[1][0]);
+const remove = catchError(async (req, res) => {
+  const { id } = req.params;
+  await Requirement.destroy({ where: { id } });
+  return res.sendStatus(204);
+});
+
+const update = catchError(async (req, res) => {
+  const { id } = req.params;
+  const result = await Requirement.update(req.body, {
+    where: { id },
+    returning: true,
+  });
+  if (result[0] === 0) return res.sendStatus(404);
+  return res.json(result[1][0]);
 });
 
 module.exports = {
-    getAll,
-    create,
-    getOne,
-    remove,
-    update,
-    getAllOrderedByPrice
-}
+  getAll,
+  create,
+  getOne,
+  remove,
+  update,
+  getAllOrderedByPrice,
+};
