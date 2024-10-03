@@ -8,7 +8,6 @@ const getAll = catchError(async(req, res) => {
         include: [
             {
                 model: Comment,
-                attributes: ["comment"]
             },
             {
                 model: Requirement,
